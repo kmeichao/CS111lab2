@@ -178,6 +178,24 @@ int main(int argc, char *argv[])
 
   printf("processes left: %d", size);
 
+while (processes_left > 0)
+ {
+   // select processes to be added to the queue
+   for (u32 i = 0; i < size; i++)
+   {
+     current_process = &data[i];
+     if (current_time == current_process->arrival_time)
+     {
+       struct process *added_node = current_process;
+       added_node->remaining_time = current_process->burst_time;
+       total_arrival_time += added_node->arrival_time;
+       total_burst_time += added_node->burst_time;
+       TAILQ_INSERT_TAIL(&list, added_node, pointers);
+     }
+   }
+
+   processes_left--;
+ }
   /* End of "Your code here" */
 
   printf("Average waiting time: %.2f\n", (float)total_waiting_time / (float)size);

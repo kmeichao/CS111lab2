@@ -194,7 +194,13 @@ int main(int argc, char *argv[])
         total_burst_time += added_node->burst_time;
         TAILQ_INSERT_TAIL(&list, added_node, pointers);
       }
-      // printf("this is %d\n", i);
+    }
+
+    if (process_currently_active && active_process_time == quantum_length)
+    {
+      // add the current process to the end of the queue
+      TAILQ_INSERT_TAIL(&list, active_process, pointers);
+      process_currently_active = false;
     }
 
     // if there is no process active, make first process on queue active
@@ -224,28 +230,18 @@ int main(int argc, char *argv[])
     active_process_time++;
     current_time++;
 
-
     if (active_process->remaining_time == 0)
     {
       total_complete_time += current_time;
       process_currently_active = false;
-      printf("processes left bfore: %d\n", processes_left);
       processes_left--;
-      printf("processes left after: %d\n", processes_left);
-    }
-
-    if (process_currently_active && active_process_time == quantum_length)
-    {
-      // add the current process to the end of the queue
-      TAILQ_INSERT_TAIL(&list, active_process, pointers);
-      process_currently_active = false;
     }
 
     printf("good\n");
   }
 
   total_response_time = total_start_time - total_arrival_time;
-	total_waiting_time = total_complete_time - total_arrival_time - total_burst_time;
+  total_waiting_time = total_complete_time - total_arrival_time - total_burst_time;
   /* End of "Your code here" */
 
   printf("Average waiting time: %.2f\n", (float)total_waiting_time / (float)size);

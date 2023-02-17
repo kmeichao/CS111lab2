@@ -223,6 +223,10 @@ int main(int argc, char *argv[])
       active_process_pid = 0;
     }
 
+    active_process->remaining_time--;
+    active_process_time++;
+    current_time++;
+    printf("good\n");
     // processes_left--;
   }
 

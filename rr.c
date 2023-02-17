@@ -162,7 +162,21 @@ int main(int argc, char *argv[])
   u32 total_response_time = 0;
 
   /* Your code here */
-  printf("hello");
+  // printf("hello");
+  struct process *current_process;
+  struct process *active_process = NULL;
+  u32 active_process_time = 0;
+  u32 active_process_pid = 0;
+
+  u32 current_time = 0;
+  u32 processes_left = size;
+
+  u32 total_start_time = 0;
+  u32 total_arrival_time = 0;
+  u32 total_burst_time = 0;
+  u32 total_complete_time = 0;
+
+  printf("processes left: %d", size);
 
   /* End of "Your code here" */
 

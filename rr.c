@@ -175,6 +175,7 @@ int main(int argc, char *argv[])
   u32 total_burst_time = 0;
   u32 total_complete_time = 0;
 
+  printf("processes left: %d", processes_left);
   while (processes_left > 0)
   {
     // select processes to be added to the queue
@@ -201,19 +202,22 @@ int main(int argc, char *argv[])
         active_process_pid = active_process->pid;
         TAILQ_REMOVE(&list, first, pointers);
       }
-      else {
+      else
+      {
         current_time++;
         continue;
       }
       active_process_time = 0;
     }
 
-    if (active_process->remaining_time == active_process->burst_time) {
-        total_start_time += current_time;
+    if (active_process->remaining_time == active_process->burst_time)
+    {
+      total_start_time += current_time;
     }
 
-    if (active_process != 0 && active_process_time == quantum_length) {
-      //add the current process to the end of the queue
+    if (active_process != 0 && active_process_time == quantum_length)
+    {
+      // add the current process to the end of the queue
       TAILQ_INSERT_TAIL(&list, current_process, pointers);
       active_process_pid = 0;
     }
@@ -222,12 +226,12 @@ int main(int argc, char *argv[])
     active_process_time++;
     current_time++;
 
-    if (active_process->remaining_time == 0) {
+    if (active_process->remaining_time == 0)
+    {
       total_complete_time += current_time;
       active_process_pid = 0;
       processes_left--;
     }
-    printf("processes left: %d", processes_left);
   }
 
   total_response_time = total_start_time - total_arrival_time;

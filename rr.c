@@ -228,6 +228,14 @@ int main(int argc, char *argv[])
     active_process->remaining_time--;
     active_process_time++;
     current_time++;
+
+    if (active_process->remaining_time == 0)
+    {
+      total_complete_time += current_time;
+      active_process_pid = 0;
+      processes_left--;
+    }
+
     printf("good\n");
     // processes_left--;
   }

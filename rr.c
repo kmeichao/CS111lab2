@@ -193,6 +193,8 @@ int main(int argc, char *argv[])
         TAILQ_INSERT_TAIL(&list, added_node, pointers);
       }
     }
+    printf("good\n");
+
     // if there is no process active, make first process on queue active
     if (active_process_pid == 0)
     {

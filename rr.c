@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
 
   while (processes_left > 0)
   {
-    printf("processes left: %d\n", processes_left);
+    //printf("processes left: %d\n", processes_left);
 
     // select processes to be added to the queue
     for (u32 i = 0; i < size; i++)
@@ -226,7 +226,7 @@ int main(int argc, char *argv[])
     }
 
     active_process->remaining_time--;
-    printf("remaining time: %d\n", active_process->remaining_time);
+    //printf("remaining time: %d\n", active_process->remaining_time);
     active_process_time++;
     current_time++;
 
@@ -237,7 +237,7 @@ int main(int argc, char *argv[])
       processes_left--;
     }
 
-    printf("good\n");
+    //printf("good\n");
   }
 
   total_response_time = total_start_time - total_arrival_time;

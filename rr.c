@@ -192,8 +192,8 @@ int main(int argc, char *argv[])
         total_burst_time += added_node->burst_time;
         TAILQ_INSERT_TAIL(&list, added_node, pointers);
       }
+      printf("this is %d\n", i);
     }
-    printf("good\n");
 
     // if there is no process active, make first process on queue active
     if (active_process_pid == 0)

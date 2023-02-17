@@ -216,6 +216,13 @@ int main(int argc, char *argv[])
       total_start_time += current_time;
     }
 
+    if (active_process != 0 && active_process_time == quantum_length)
+    {
+      // add the current process to the end of the queue
+      TAILQ_INSERT_TAIL(&list, current_process, pointers);
+      active_process_pid = 0;
+    }
+
     // processes_left--;
   }
 

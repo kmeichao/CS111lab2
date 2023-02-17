@@ -162,6 +162,7 @@ int main(int argc, char *argv[])
   u32 total_response_time = 0;
 
   /* Your code here */
+  printf("hello");
 
   /* End of "Your code here" */
 

@@ -162,6 +162,7 @@ int main(int argc, char *argv[])
   u32 total_response_time = 0;
 
   /* Your code here */
+  printf("hello");
   struct process *current_process;
   struct process *active_process = NULL;
   u32 active_process_time = 0;

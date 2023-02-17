@@ -176,10 +176,12 @@ int main(int argc, char *argv[])
   u32 total_burst_time = 0;
   u32 total_complete_time = 0;
 
-  printf("processes left: %d\n", size);
+ // printf("processes left: %d\n", size);
 
   while (processes_left > 0)
   {
+    printf("processes left: %d\n", size);
+
     // select processes to be added to the queue
     for (u32 i = 0; i < size; i++)
     {

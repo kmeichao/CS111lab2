@@ -176,26 +176,45 @@ int main(int argc, char *argv[])
   u32 total_burst_time = 0;
   u32 total_complete_time = 0;
 
-  printf("processes left: %d", size);
+  printf("processes left: %d\n", size);
 
-while (processes_left > 0)
- {
-   // select processes to be added to the queue
-   for (u32 i = 0; i < size; i++)
-   {
-     current_process = &data[i];
-     if (current_time == current_process->arrival_time)
-     {
-       struct process *added_node = current_process;
-       added_node->remaining_time = current_process->burst_time;
-       total_arrival_time += added_node->arrival_time;
-       total_burst_time += added_node->burst_time;
-       TAILQ_INSERT_TAIL(&list, added_node, pointers);
-     }
-   }
+  while (processes_left > 0)
+  {
+    // select processes to be added to the queue
+    for (u32 i = 0; i < size; i++)
+    {
+      current_process = &data[i];
+      if (current_time == current_process->arrival_time)
+      {
+        struct process *added_node = current_process;
+        added_node->remaining_time = current_process->burst_time;
+        total_arrival_time += added_node->arrival_time;
+        total_burst_time += added_node->burst_time;
+        TAILQ_INSERT_TAIL(&list, added_node, pointers);
+      }
+    }
+    // if there is no process active, make first process on queue active
+    if (active_process_pid == 0)
+    {
+      if (!TAILQ_EMPTY(&list))
+      {
+        struct process *first = TAILQ_FIRST(&list);
+        active_process = first;
+        active_process_pid = active_process->pid;
+        TAILQ_REMOVE(&list, first, pointers);
+      }
+      else
+      {
+        current_time++;
+        continue;
+      }
+      active_process_time = 0;
+    }
 
-   processes_left--;
- }
+    processes_left--;
+
+  }
+
   /* End of "Your code here" */
 
   printf("Average waiting time: %.2f\n", (float)total_waiting_time / (float)size);

@@ -166,7 +166,7 @@ int main(int argc, char *argv[])
   struct process *current_process;
   struct process *active_process = NULL;
   u32 active_process_time = 0;
-  u32 active_process_pid = 0;
+  bool process_currently_active = false;
 
   u32 current_time = 0;
   u32 processes_left = size;
@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
   u32 total_burst_time = 0;
   u32 total_complete_time = 0;
 
- // printf("processes left: %d\n", size);
+  // printf("processes left: %d\n", size);
 
   while (processes_left > 0)
   {
@@ -194,17 +194,17 @@ int main(int argc, char *argv[])
         total_burst_time += added_node->burst_time;
         TAILQ_INSERT_TAIL(&list, added_node, pointers);
       }
-      //printf("this is %d\n", i);
+      // printf("this is %d\n", i);
     }
 
     // if there is no process active, make first process on queue active
-    if (active_process_pid == 0)
+    if (process_currently_active == false)
     {
       if (!TAILQ_EMPTY(&list))
       {
         struct process *first = TAILQ_FIRST(&list);
         active_process = first;
-        active_process_pid = active_process->pid;
+        process_currently_active = true;
         TAILQ_REMOVE(&list, first, pointers);
       }
       else
@@ -212,20 +212,11 @@ int main(int argc, char *argv[])
         current_time++;
         continue;
       }
+      if (active_process->remaining_time == active_process->burst_time)
+      {
+        total_start_time += current_time;
+      }
       active_process_time = 0;
-    }
-
-    if (active_process->remaining_time == active_process->burst_time)
-    {
-      total_start_time += current_time;
-    }
-
-    if (active_process != 0 && active_process_time == quantum_length)
-    {
-      // add the current process to the end of the queue
-      current_process->burst_time = current_process->remaining_time;
-      TAILQ_INSERT_TAIL(&list, current_process, pointers);
-      active_process_pid = 0;
     }
 
     active_process->remaining_time--;
@@ -233,18 +224,28 @@ int main(int argc, char *argv[])
     active_process_time++;
     current_time++;
 
+
     if (active_process->remaining_time == 0)
     {
       total_complete_time += current_time;
-      active_process_pid = 0;
+      process_currently_active = false;
       printf("processes left bfore: %d\n", processes_left);
       processes_left--;
       printf("processes left after: %d\n", processes_left);
     }
 
+    if (active_process != 0 && active_process_time == quantum_length)
+    {
+      // add the current process to the end of the queue
+      TAILQ_INSERT_TAIL(&list, active_process, pointers);
+      process_currently_active = false;
+    }
+
     printf("good\n");
   }
 
+  total_response_time = total_start_time - total_arrival_time;
+	total_waiting_time = total_complete_time - total_arrival_time - total_burst_time;
   /* End of "Your code here" */
 
   printf("Average waiting time: %.2f\n", (float)total_waiting_time / (float)size);

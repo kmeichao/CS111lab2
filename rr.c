@@ -226,6 +226,7 @@ int main(int argc, char *argv[])
     }
 
     active_process->remaining_time--;
+    printf("remaining time: %d\n", active_process->remaining_time);
     active_process_time++;
     current_time++;
 

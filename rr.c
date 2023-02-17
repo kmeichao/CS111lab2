@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
 
   while (processes_left > 0)
   {
-    printf("processes left: %d\n", size);
+    printf("processes left: %d\n", processes_left);
 
     // select processes to be added to the queue
     for (u32 i = 0; i < size; i++)
@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
         total_burst_time += added_node->burst_time;
         TAILQ_INSERT_TAIL(&list, added_node, pointers);
       }
-      printf("this is %d\n", i);
+      //printf("this is %d\n", i);
     }
 
     // if there is no process active, make first process on queue active
@@ -223,6 +223,7 @@ int main(int argc, char *argv[])
     if (active_process != 0 && active_process_time == quantum_length)
     {
       // add the current process to the end of the queue
+      current_process->burst_time = current_process->remaining_time;
       TAILQ_INSERT_TAIL(&list, current_process, pointers);
       active_process_pid = 0;
     }
@@ -242,7 +243,6 @@ int main(int argc, char *argv[])
     }
 
     printf("good\n");
-    // processes_left--;
   }
 
   /* End of "Your code here" */

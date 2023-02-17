@@ -175,7 +175,8 @@ int main(int argc, char *argv[])
   u32 total_burst_time = 0;
   u32 total_complete_time = 0;
 
-  printf("processes left: %d", processes_left);
+  printf("processes left: %d", size);
+
   while (processes_left > 0)
   {
     // select processes to be added to the queue

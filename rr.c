@@ -211,8 +211,12 @@ int main(int argc, char *argv[])
       active_process_time = 0;
     }
 
-    processes_left--;
+    if (active_process->remaining_time == active_process->burst_time)
+    {
+      total_start_time += current_time;
+    }
 
+    // processes_left--;
   }
 
   /* End of "Your code here" */

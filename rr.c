@@ -227,6 +227,7 @@ int main(int argc, char *argv[])
       active_process_pid = 0;
       processes_left--;
     }
+    printf("processes left: %d", processes_left);
   }
 
   total_response_time = total_start_time - total_arrival_time;

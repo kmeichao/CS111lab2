@@ -236,8 +236,9 @@ int main(int argc, char *argv[])
     {
       total_complete_time += current_time;
       active_process_pid = 0;
+      printf("processes left bfore: %d\n", processes_left);
       processes_left--;
-      printf("kkjsdisjh\n");
+      printf("processes left after: %d\n", processes_left);
     }
 
     printf("good\n");

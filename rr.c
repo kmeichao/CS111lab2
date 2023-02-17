@@ -234,7 +234,7 @@ int main(int argc, char *argv[])
       printf("processes left after: %d\n", processes_left);
     }
 
-    if (active_process != 0 && active_process_time == quantum_length)
+    if (process_currently_active && active_process_time == quantum_length)
     {
       // add the current process to the end of the queue
       TAILQ_INSERT_TAIL(&list, active_process, pointers);
